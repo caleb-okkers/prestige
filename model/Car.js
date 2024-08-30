@@ -4,7 +4,7 @@ class Cars {
     fetchCars(req, res) {
         try {
             const strQry = `
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, , image_url, availability_status
+            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
             from Cars
             `
             db.query(strQry, (err, results) => {
@@ -25,7 +25,7 @@ class Cars {
     fetchCar(req, res) {
         try {
             const strQry = ` 
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, , image_url, availability_status
+            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
             from Cars
             where car_id = ${req.params.id}
             `
@@ -47,7 +47,7 @@ class Cars {
     latestCars(req, res) {
         try {
             const strQry = ` 
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, , image_url, availability_status
+            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
             from Cars order by car_id  desc limit 4;
             `
             db.query(strQry, (err, results) => {
@@ -93,7 +93,7 @@ class Cars {
             const strQry = ` 
             update Cars
             set ?
-            where prodID = ${req.params.id}
+            where car_id = ${req.params.id}
             `
             db.query(strQry, [data], (err) => {
                 if (err) throw new Error(err.message)
@@ -114,7 +114,7 @@ class Cars {
         try {
             const strQry = `
             delete from Cars
-            where prodID = ${req.params.id}
+            where car_id = ${req.params.id}
             `
             db.query(strQry, (err)  => {
                 if(err) throw new Error('Unable to delete Car')
