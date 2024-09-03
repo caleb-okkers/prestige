@@ -12,7 +12,7 @@ const validateCar = (req, res, next) => {
         return res.status(400).json({ error: "Make, model, year, and daily price are required fields" });
     }
 
-    if (isNaN(year) || year < 1886 || year > new Date().getFullYear()) { // First car was made in 1886
+    if (isNaN(year) || year < 1886 || year > new Date().getFullYear()) { 
         return res.status(400).json({ error: "Invalid year provided" });
     }
 
