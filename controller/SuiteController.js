@@ -6,10 +6,10 @@ const suiteRouter = express.Router();
 suiteRouter.use(bodyParser.json());
 
 const validateSuite = (req, res, next) => {
-    const { suite_number, suite_type, max_occupancy, price_per_night, img_url } = req.body;
+    const { suite_number, suite_type, description, max_occupancy, price_per_night, img_url } = req.body;
     
-    if (!suite_number || !suite_type || !max_occupancy || !price_per_night || !img_url) {
-        return res.status(400).json({ error: "Suite number, suite type, max occupancy, price per night and image url are required fields" });
+    if (!suite_number || !suite_type || !description || !max_occupancy || !price_per_night || !img_url) {
+        return res.status(400).json({ error: "Suite number, suite type, description, max occupancy, price per night and image url are required fields" });
     }
 
 

@@ -4,7 +4,7 @@ class Reservations {
     fetchReservations(req, res) {
         try {
             const strQry = `
-            select reservation_id, user_id, suite_id, check_in_date, check_out_date, total_price, status, created_at, updated_at
+            select reservation_id, user_id, suite_id, img_url, check_in_date, check_out_date, total_price, status, created_at, updated_at
             from reservations
             `
             db.query(strQry, (err, results) => {
@@ -25,7 +25,7 @@ class Reservations {
     fetchReservation(req, res) {
         try {
             const strQry = ` 
-            select reservation_id, user_id, suite_id, check_in_date, check_out_date, total_price, status, created_at, updated_at
+            select reservation_id, user_id, suite_id, img_url, check_in_date, check_out_date, total_price, status, created_at, updated_at
             from reservations
             where reservation_id = ${req.params.id}
             `
