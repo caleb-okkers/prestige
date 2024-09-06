@@ -1,6 +1,6 @@
 import path from "path";   
-import { bookingRouter } from "./controller/BookingController.js";
-import { carRouter } from "./controller/CarController.js";
+import { reservationRouter } from "./controller/ReservationController.js";
+import { suiteRouter } from "./controller/SuiteController.js";
 import { userRouter, express } from "./controller/UserController.js";
 import { errorHandling } from "./middleware/ErrorHandling.js";
 import cors from 'cors'
@@ -21,8 +21,8 @@ app.use((req, res, next) => {
     next()
   })
   
-  app.use('/bookings', bookingRouter)
-  app.use('/cars', carRouter)
+  app.use('/reservations', reservationRouter)
+  app.use('/suites', suiteRouter)
   app.use('/users', userRouter)
   
 app.use(

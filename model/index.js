@@ -1,13 +1,13 @@
-import { Bookings } from  './Booking.js'
-import { Cars } from './car.js'
+import {Reservations} from  './Reservation.js'
+import { Suites } from './Suite.js'
 import { Users } from './User.js'
 
-const bookings = new Bookings()
-const cars = new Cars()
+const reservations = new Reservations()
+const suites = new Suites()
 const users = new Users()
 
 export {
-    bookings,
-    cars,
+    reservations,
+    suites,
     users
 }

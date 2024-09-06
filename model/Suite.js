@@ -1,11 +1,11 @@
 import { connection as db } from '../config/index.js'
 
-class Cars {
-    fetchCars(req, res) {
+class Suites {
+    fetchSuites(req, res) {
         try {
             const strQry = `
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
-            from Cars
+            select suite_id, suite_number, suite_type, description, price_per_night, max_occupancy , availability_status, image_url
+            from suites
             `
             db.query(strQry, (err, results) => {
                 if(err) throw new Error(err.message)
@@ -22,12 +22,12 @@ class Cars {
         }
     }
     
-    fetchCar(req, res) {
+    fetchSuite(req, res) {
         try {
             const strQry = ` 
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
-            from Cars
-            where car_id = ${req.params.id}
+            select suite_id, suite_number, suite_type, description, price_per_night, max_occupancy , availability_status, image_url
+            from suites
+            where suite_id = ${req.params.id}
             `
             db.query(strQry, (err, result) => {
                 if(err) throw new Error(err.message)
@@ -44,11 +44,11 @@ class Cars {
         }
     }
 
-    latestCars(req, res) {
+    premiumSuites(req, res) {
         try {
             const strQry = ` 
-            select car_id, make, model, year, color, transmission, engine, description, daily_price, image_url, availability_status
-            from Cars order by car_id  desc limit 4;
+            select suite_id, suite_number, suite_type, description, price_per_night, max_occupancy , availability_status, image_url
+            from suites order by price_per_night  desc limit 4;
             `
             db.query(strQry, (err, results) => {
                 if(err) throw new Error(err.message)
@@ -65,18 +65,18 @@ class Cars {
         }
     }
 
-    addCar(req, res) {
+    addSuite(req, res) {
         try {
             let data = req.body
             const strQry = `
-            insert into Cars
+            insert into suites
             set ?
             `
             db.query(strQry, [data], (err) => {
                 if(err) throw new Error(err.message) 
                     res.json({
                         status: res.statusCode,
-                        msg: "Car has been added successfully ✅"
+                        msg: "Suite has been added successfully."
                     })
             })
         } catch (e) {
@@ -87,19 +87,19 @@ class Cars {
         }
     }
 
-    updateCar(req, res) {
+    updateSuite(req, res) {
         try {
             let data = req.body
             const strQry = ` 
-            update Cars
+            update suites
             set ?
-            where car_id = ${req.params.id}
+            where Suite_id = ${req.params.id}
             `
             db.query(strQry, [data], (err) => {
                 if (err) throw new Error(err.message)
                     res.json({
                         status: res.statusCode,
-                        msg: 'Car details updated successfully 🔃.'
+                        msg: 'Suite details updated successfully.'
                     })
             })
         } catch (e) {
@@ -110,17 +110,17 @@ class Cars {
         }
     }
 
-    deleteCar(req, res) {
+    deleteSuite(req, res) {
         try {
             const strQry = `
-            delete from Cars
-            where car_id = ${req.params.id}
+            delete from suites
+            where Suite_id = ${req.params.id}
             `
             db.query(strQry, (err)  => {
-                if(err) throw new Error('Unable to delete Car')
+                if(err) throw new Error('Unable to delete Suite')
                     res.json({
                         status: res.statusCode,
-                        msg: 'Car information deleted successfully 🗑️'
+                        msg: 'Suite information deleted successfully.'
                     })
             })
         } catch (e) {
@@ -133,5 +133,5 @@ class Cars {
 }
 
 export {
-    Cars
+    Suites
 }

@@ -1,11 +1,11 @@
 import { connection as db } from '../config/index.js'
 
-class Bookings {
-    fetchBookings(req, res) {
+class Reservations {
+    fetchReservations(req, res) {
         try {
             const strQry = `
-            select booking_id, user_id, car_id, start_date, end_date, total_price, pickup_location, dropoff_location, booking_status, create_at, updated_at
-            from Bookings
+            select reservation_id, user_id, suite_id, check_in_date, check_out_date, total_price, status, created_at, updated_at
+            from reservations
             `
             db.query(strQry, (err, results) => {
                 if(err) throw new Error(err.message)
@@ -22,12 +22,12 @@ class Bookings {
         }
     }
     
-    fetchBooking(req, res) {
+    fetchReservation(req, res) {
         try {
             const strQry = ` 
-            select booking_id, user_id, car_id, start_date, end_date, total_price, pickup_location, dropoff_location, booking_status, create_at, updated_at
-            from Bookings
-            where booking_id = ${req.params.id}
+            select reservation_id, user_id, suite_id, check_in_date, check_out_date, total_price, status, created_at, updated_at
+            from reservations
+            where reservation_id = ${req.params.id}
             `
             db.query(strQry, (err, result) => {
                 if(err) throw new Error(err.message)
@@ -44,18 +44,18 @@ class Bookings {
         }
     }
 
-    addBooking(req, res) {
+    addReservation(req, res) {
         try {
             let data = req.body
             const strQry = `
-            insert into Bookings
+            insert into reservations
             set ?
             `
             db.query(strQry, [data], (err) => {
                 if(err) throw new Error(err.message) 
                     res.json({
                         status: res.statusCode,
-                        msg: "Booking successful ✅"
+                        msg: "Reservation successful."
                     })
             })
         } catch (e) {
@@ -66,19 +66,19 @@ class Bookings {
         }
     }
 
-    updateBooking(req, res) {
+    updateReservation(req, res) {
         try {
             let data = req.body
             const strQry = ` 
-            update Bookings
+            update reservations
             set ?
-            where booking_id = ${req.params.id}
+            where reservation_id = ${req.params.id}
             `
             db.query(strQry, [data], (err) => {
                 if (err) throw new Error(err.message)
                     res.json({
                         status: res.statusCode,
-                        msg: 'Booking updated successfully 🔃.'
+                        msg: 'Reservation updated successfully.'
                     })
             })
         } catch (e) {
@@ -89,17 +89,17 @@ class Bookings {
         }
     }
 
-    cancelBooking(req, res) {
+    cancelReservation(req, res) {
         try {
             const strQry = `
-            delete from Bookings
-            where booking_id = ${req.params.id}
+            delete from reservations
+            where reservation_id = ${req.params.id}
             `
             db.query(strQry, (err)  => {
-                if(err) throw new Error('Unable to cancel booking')
+                if(err) throw new Error('Unable to cancel reservation')
                     res.json({
                         status: res.statusCode,
-                        msg: 'Booking cancelled 🗑️'
+                        msg: 'Reservation cancelled.'
                     })
             })
         } catch (e) {
@@ -112,5 +112,5 @@ class Bookings {
 }
 
 export {
-    Bookings
+    Reservations
 }

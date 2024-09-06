@@ -6,8 +6,8 @@ class Users {
     fetchUsers(req, res) {
         try {
             const strQry = `
-                select user_id, first_name, last_name, email, password, phone_number, drivers_license_number, role, created_at
-                from Users;
+                select user_id, first_name, last_name, email, password, phone_number, role, created_at
+                from users;
                 `
             db.query(strQry, (err, results) => {
               if (err) throw new Error(`Unable to retrieve all users`)
@@ -27,8 +27,8 @@ class Users {
     fetchUser(req, res) {
         try{
             const strQry = `
-            select user_id, first_name, last_name, email, password, phone_number, drivers_license_number, role, created_at
-            from Users where user_id = ${req.params.id};
+            select user_id, first_name, last_name, email, password, phone_number, role, created_at
+            from users where user_id = ${req.params.id};
             `
             db.query(strQry, (err, result) => {
               if (err) throw new Error(err.message)
@@ -56,7 +56,7 @@ class Users {
             } 
             
             let strQry = `
-            insert into  Users
+            insert into  users
             set ?;
             `
             db.query(strQry, [data], (err) => {
@@ -69,7 +69,7 @@ class Users {
             const token = createToken(user)
             res.json({
               token,
-              msg: 'User registered successfully ✅'
+              msg: 'User registered successfully.'
             })
           }
          })   
@@ -88,7 +88,7 @@ class Users {
               data.password = await hash(data.password, 12)
             }
             const strQry = `
-            update Users
+            update users
             set ?
             where user_id = ${req.params.id}
             `
@@ -96,7 +96,7 @@ class Users {
               if (err) throw new Error('Unable to update user')
                 res.json({
                   status: res.statusCode,
-                  msg: 'User details updated 🔃'
+                  msg: 'User details updated.'
                 })
             })
           } catch (e) {
@@ -110,14 +110,14 @@ class Users {
     deleteUser(req, res) {
         try {
             const strQry = `
-            delete from Users 
+            delete from users 
             where user_id = ${req.params.id}
             `
             db.query(strQry, (err) => {
               if(err) throw new Error('Unable to delete user')
                 res.json({
                   status: res.statusCode,
-                  msg: 'User deleted 🗑️'
+                  msg: 'User deleted.'
                 })
             })
           } catch (e) {
@@ -132,8 +132,8 @@ class Users {
         try {
             const {email, password} = req.body
             const strQry = `
-            select user_id, first_name, last_name, email, password, phone_number, drivers_license_number, role, created_at
-            from Users
+            select user_id, first_name, last_name, email, password, phone_number, role, created_at
+            from users
             where email = '${email}'                  
             `
             db.query(strQry, async (err, result) => {             
