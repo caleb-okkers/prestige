@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
-    <title>Prestige Car Hire</title>
+    <title>Via Veneto Royale</title>
 </head>
 <body>
     <h1>Welcome to Prestige</h1>
@@ -67,7 +67,7 @@
         </table>
 
         <table border = 5>
-            <caption><h2>Cars</h2></caption>
+            <caption><h2>Suites</h2></caption>
             <thead>
                 <tr>
                     <th>HTTP Method</th>
@@ -78,39 +78,39 @@
             <tbody>
                 <tr>
                     <td>GET</td>
-                    <td>/cars</td>
-                    <td>Fetches all cars from the database</td>
+                    <td>/suites</td>
+                    <td>Fetches all suites from the database</td>
                 </tr>
                 <tr>
                     <td>GET</td>
-                    <td>/cars/:id</td>
-                    <td>Fetches a single car's data from the database with the id provided.</td>
+                    <td>/suites/:id</td>
+                    <td>Fetches a single suite's data from the database with the id provided.</td>
                 </tr>
                 <tr>
                     <td>GET</td>
-                    <td>/cars/newadditions</td>
-                    <td>Fetches the 4 latest cars added to the database from the most recent.</td>
+                    <td>/suites/premium-suites</td>
+                    <td>Fetches the 4 most expensive suites added to the database from the highest price per night.</td>
                 </tr>
                 <tr>
                     <td>POST</td>
-                    <td>/cars/addcar</td>
-                    <td>Adds a new car to the database.</td>
+                    <td>/suites/add-suite</td>
+                    <td>Adds a new suite to the database.</td>
                 </tr>
                 <tr>
                     <td>PATCH</td>
-                    <td>/cars/update/:id</td>
-                    <td>Updates a single car with the id value provided.</td>
+                    <td>/suites/update/:id</td>
+                    <td>Updates a single suite with the id value provided.</td>
                 </tr>
                 <tr>
                     <td>DELETE</td>
-                    <td>/cars/delete/:id</td>
-                    <td>Deletes a single car's data from the database with the id provided</td>
+                    <td>/suites/delete/:id</td>
+                    <td>Deletes a single suite's data from the database with the id provided</td>
                 </tr>
             </tbody>
         </table>
 
                 <table border = 5>
-            <caption><h2>Bookings</h2></caption>
+            <caption><h2>Reservations</h2></caption>
             <thead>
                 <tr>
                     <th>HTTP Method</th>
@@ -121,28 +121,28 @@
             <tbody>
                 <tr>
                     <td>GET</td>
-                    <td>/bookings</td>
-                    <td>Fetches all bookings from the database</td>
+                    <td>/reservations</td>
+                    <td>Fetches all reservations from the database</td>
                 </tr>
                 <tr>
                     <td>GET</td>
-                    <td>/bookings/:id</td>
-                    <td>Fetches a single booking from the database with the id provided.</td>
+                    <td>/reservations/:id</td>
+                    <td>Fetches a single reservation from the database with the id provided.</td>
                 </tr>
                 <tr>
                     <td>POST</td>
-                    <td>/bookings/addbooking</td>
-                    <td>Adds a new booking to the database.</td>
+                    <td>/reservations/add-reservation</td>
+                    <td>Adds a new reservation to the database.</td>
                 </tr>
                 <tr>
                     <td>PATCH</td>
-                    <td>/bookings/update/:id</td>
-                    <td>Updates a single booking with the id value provided.</td>
+                    <td>/reservations/update/:id</td>
+                    <td>Updates a single reservation with the id value provided.</td>
                 </tr>
                 <tr>
                     <td>DELETE</td>
-                    <td>/bookings/cancel/:id</td>
-                    <td>Deletes a single booking's data from the database with the id provided</td>
+                    <td>/reservations/cancel/:id</td>
+                    <td>Deletes a single reservation's data from the database with the id provided</td>
                 </tr>
             </tbody>
         </table>
