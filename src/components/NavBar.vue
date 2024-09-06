@@ -1,128 +1,144 @@
-<template>
+  <template>
     <div>
-      
-  
       <nav class="navbar navbar-expand-lg fixed-top home-nav mb-5" id="home-nav">
-        <div class="container-fluid">
-          <router-link class="navbar-brand" to="/">
-            <img
-              src=""
-              alt="logo"
-              loading="lazy"
-            />
-          </router-link>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <router-link class="nav-link" to="/">Home</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/about">About</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/products"
-                  >Products</router-link
-                >
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/admin">Admin</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/contact">Contact</router-link>
-              </li>
-              <li class="nav-item">
-                <router-link class="nav-link" to="/register"
-                  >Register</router-link
-                >
-              </li>
-            </ul>
+        <div class="container-fluid d-flex flex-column align-items-center">
+          <!-- Title Row -->
+          <div class="row w-100 text-center mx-auto navbar-brand">
+              <h1 class=" title ">Via Veneto Royale</h1>
+          </div>
+          <!-- Navbar Links Row -->
+          <div class="row w-100">
+            <button
+              class="navbar-toggler mx-auto"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+              <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/">Home</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/about">About</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/products">Products</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/admin">Admin</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/contact">Contact</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/register">Register</router-link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
     </div>
   </template>
+  
   <script>
   export default {
     name: "NavBar",
+    mounted() {
+      window.addEventListener("scroll", this.handleScroll);
+    },
+    beforeUnmount() {
+      window.removeEventListener("scroll", this.handleScroll);
+    },
+    methods: {
+      handleScroll() {
+        const navbar = document.getElementById("home-nav");
+        if (window.scrollY > 10) {
+          navbar.style.backgroundColor = "rgb(20, 20, 20)";
+        } else {
+          navbar.style.backgroundColor = "rgba(0, 0, 0, 0)";
+        }
+      },
+    },
   };
   </script>
-  <style scoped>
-  img {
-    width: 4rem;
-  }
   
+  <style scoped>
   .navbar {
-      background: #fff;
-      font-family: "Bona Nova SC", serif;
+    background: rgba(0, 0, 0, 0);
+    font-family: "Bona Nova SC", serif;
     font-weight: 600;
     font-style: normal;
     font-size: 1.1rem;
-      
+    transition: background-color 0.2s ease-in;
+  }
+  
+  .navbar .navbar-brand {
+    text-align: center;
   }
   
   .navbar .nav-link {
-      color: #777;
-      padding-left: 1rem !important;
-      padding-right: 1rem !important;
+    color: #fff;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
   
   .navbar-toggler {
-      border: none !important;
-      outline: none !important; 
+    border: none !important;
+    outline: none !important;
   }
   
   .navbar-toggler:focus {
-      box-shadow: none !important; 
-      background: #fff !important;
+    box-shadow: none !important;
+    background: #fff !important;
   }
   
   nav a.router-link-exact-active {
-    color: #000 !important;
-    }
-  
-  
-  .logo {
-      width: 4rem;
+    color: #ecb904 !important;
   }
   
   .nav-link {
-      position: relative;
-      display: inline-block;
-      padding-bottom: 5px;
-      text-decoration: none;
-      /* color: #000; */
-      transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-decoration: none;
+    transition: color 0.3s ease;
   }
   
   .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px; 
-      bottom: 0;
-      left: 50%;
-      background-color: #000; 
-      transition: width 0.3s ease, left 0.3s ease;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ecb904;
+    transition: width 0.3s ease, left 0.3s ease;
   }
   
   .nav-link:hover {
-    color: #000 !important; 
+    color: #ecb904 !important;
   }
   
   .nav-link:hover::after {
-      width: 100%;
-      left: 0;
+    width: 100%;
+    left: 0;
   }
   
+  .home-nav .container-fluid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .title {
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
   </style>
