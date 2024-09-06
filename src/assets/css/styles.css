@@ -1,3 +1,41 @@
+*,
+*::after,
+*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+html {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+}
+
+body {
+    min-height: 100vh;
+    background: #fff;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 400;
+    font-style: normal;
+    flex-wrap: wrap;
+    font-size: 16px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-rows: auto minmax(100dvh, 100%) auto
+}
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
