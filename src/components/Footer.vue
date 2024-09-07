@@ -1,7 +1,7 @@
 <template>
     <footer class="container-fluid">
         <div class="row">
-            <p class="lead">The Hotel &copy; <span class="shadow">{{ cYear }}</span></p>
+            <p class="lead">Via Veneto Royale &copy; <span>{{ cYear }}</span></p>
         </div>
     </footer>
 </template>
@@ -18,13 +18,12 @@ export default {
 <style scoped>
 
 footer {
-    color: #000;
-    background: #fff;
+    color: #fff;
+    background: rgba(20, 20, 20, 1);
     font-family: "Bona Nova SC", serif;
     font-weight: 500;
     font-style: normal;
     font-size: 2.5rem;
-    color: rgb(29, 29, 29);
     bottom: 0;
     z-index: 1;
 }

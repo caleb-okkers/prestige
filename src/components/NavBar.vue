@@ -4,7 +4,7 @@
         <div class="container-fluid d-flex flex-column align-items-center">
           <!-- Title Row -->
           <div class="row w-100 text-center mx-auto navbar-brand">
-              <h1 class=" title ">Via Veneto Royale</h1>
+              <h1 class=" title ">VIA VENETO ROYALE</h1>
           </div>
           <!-- Navbar Links Row -->
           <div class="row w-100">
@@ -28,16 +28,19 @@
                   <router-link class="nav-link" to="/about">About</router-link>
                 </li>
                 <li class="nav-item">
-                  <router-link class="nav-link" to="/products">Products</router-link>
+                  <router-link class="nav-link" to="/stay">Stay</router-link>
                 </li>
                 <li class="nav-item">
-                  <router-link class="nav-link" to="/admin">Admin</router-link>
+                  <router-link class="nav-link" to="/dine">Dine</router-link>
                 </li>
                 <li class="nav-item">
                   <router-link class="nav-link" to="/contact">Contact</router-link>
                 </li>
+                <!-- <li class="nav-item">
+                  <router-link class="nav-link" to="/reservations">Reservations</router-link>
+                </li> -->
                 <li class="nav-item">
-                  <router-link class="nav-link" to="/register">Register</router-link>
+                  <router-link class="nav-link" to="/user-dashboard">Login/Register</router-link>
                 </li>
               </ul>
             </div>
@@ -70,13 +73,25 @@
   </script>
   
   <style scoped>
+
+.title {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: italic;
+} 
+
+
   .navbar {
     background: rgba(0, 0, 0, 0);
-    font-family: "Bona Nova SC", serif;
-    font-weight: 600;
+    font-family: Georgia, 'Times New Roman', Times, serif, serif;
+    font-weight: 500;
     font-style: normal;
     font-size: 1.1rem;
     transition: background-color 0.2s ease-in;
+  }
+
+  .navbar:hover {
+    background: rgba(20, 20, 20, 1) !important;
   }
   
   .navbar .navbar-brand {
@@ -99,9 +114,22 @@
     background: #fff !important;
   }
   
-  nav a.router-link-exact-active {
-    color: #ecb904 !important;
+  nav a.router-link-active {
+    /* color: #ecb904 !important; */
+    color: #b19a48 !important;
   }
+
+  nav a.router-link-active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  /* background-color: #ecb904; */
+  background-color: #b19a48;
+  transition: width 0.3s ease, left 0.3s ease;
+}
   
   .nav-link {
     position: relative;
@@ -118,12 +146,14 @@
     height: 1px;
     bottom: 0;
     left: 50%;
-    background-color: #ecb904;
+    /* background-color: #ecb904; */
+    background-color: #b19a48;
     transition: width 0.3s ease, left 0.3s ease;
   }
   
   .nav-link:hover {
-    color: #ecb904 !important;
+    /* color: #ecb904 !important; */
+    color: #b19a48 !important;
   }
   
   .nav-link:hover::after {

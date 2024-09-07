@@ -9,7 +9,6 @@
       <video class="video" autoplay muted preload="auto" loop>
         <source src="https://github.com/caleb-okkers/vv-royale-assets/raw/main/rome---final-2024.mp4" type="video/mp4">
       </video>
-      <img src="https://github.com/caleb-okkers/classique/blob/main/images/home1.webp" alt="" class="foreground-image">
     </div>
   </div>
 </template>
@@ -26,7 +25,7 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100vh; /* Full height of the viewport */
+  height: 100vh; 
 }
 
 .welcome-container {
@@ -40,17 +39,19 @@ export default {
 .welcome {
   color: #fff;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-size: 4rem;
+  font-size: 5rem;
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
 }
 
 .video-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: -1; /* Sends the video behind the content */
+  z-index: -1;
 }
 
 .video {
@@ -59,7 +60,7 @@ export default {
   left: 50%;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures the video covers the entire container */
+  object-fit: cover; 
   transform: translate(-50%, -50%);
 }
 
@@ -70,11 +71,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Ensures the gradient overlay is on top of the video */
+  z-index: 1;
 }
 
 .foreground-image {
   position: relative;
-  z-index: 2; /* Keeps the image on top of the video */
+  z-index: 2;
 }
 </style>
