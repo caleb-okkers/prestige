@@ -74,8 +74,4 @@ export default {
   z-index: 1;
 }
 
-.foreground-image {
-  position: relative;
-  z-index: 2;
-}
 </style>
