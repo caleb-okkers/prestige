@@ -24,6 +24,13 @@
     display: none;
 }
 
+:root {
+  --primary-light: #FDFDFC;
+  --secondary-light: #F1F0EE;
+  --primary-dark: #0e0d0c;
+  --secondary-dark: #D8D5CF;
+}
+
 html {
     min-height: 100vh;
     margin: 0;
@@ -33,7 +40,7 @@ html {
 
 body {
     min-height: 100vh;
-    background: #fff;
+    background: var(--primary-light);
     overflow-x: hidden;
     overflow-y: scroll;
     margin: 0;
