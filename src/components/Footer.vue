@@ -18,8 +18,8 @@ export default {
 <style scoped>
 
 footer {
-    color: #fff;
-    background: rgba(20, 20, 20, 1);
+    color: var(--primary-light) ;
+    background: var(--primary-dark);
     font-family: "Bona Nova SC", serif;
     font-weight: 500;
     font-style: normal;

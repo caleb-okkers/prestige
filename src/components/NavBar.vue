@@ -63,7 +63,7 @@
       handleScroll() {
         const navbar = document.getElementById("home-nav");
         if (window.scrollY > 10) {
-          navbar.style.backgroundColor = "rgb(20, 20, 20)";
+          navbar.style.backgroundColor = "var(--primary-dark)";
         } else {
           navbar.style.backgroundColor = "rgba(0, 0, 0, 0)";
         }
@@ -91,7 +91,7 @@
   }
 
   .navbar:hover {
-    background: rgba(20, 20, 20, 1) !important;
+    background: var(--primary-dark) !important;
   }
   
   .navbar .navbar-brand {
@@ -116,7 +116,8 @@
   
   nav a.router-link-active {
     /* color: #ecb904 !important; */
-    color: #b19a48 !important;
+    /* color: var(--primary-light) !important; */
+    color: var(--primary-light) !important;
   }
 
   nav a.router-link-active::after {
@@ -127,7 +128,7 @@
   bottom: 0;
   left: 0;
   /* background-color: #ecb904; */
-  background-color: #b19a48;
+  background-color: var(--primary-light);
   transition: width 0.3s ease, left 0.3s ease;
 }
   
@@ -147,13 +148,13 @@
     bottom: 0;
     left: 50%;
     /* background-color: #ecb904; */
-    background-color: #b19a48;
+    background-color: var(--primary-light);
     transition: width 0.3s ease, left 0.3s ease;
   }
   
   .nav-link:hover {
     /* color: #ecb904 !important; */
-    color: #b19a48 !important;
+    color: var(--primary-light) !important;
   }
   
   .nav-link:hover::after {
