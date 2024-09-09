@@ -1,7 +1,7 @@
 <template>
     <div class="container justify-content-center about pt-5">
         <h1 class="heading pt-5">
-          LOGIN / REGISTER
+          Login / Register
         </h1>
     </div>
 </template>
