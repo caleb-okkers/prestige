@@ -3,7 +3,7 @@
 
         <div class="container justify-content-center about pt-5">
             <h1 class="heading pt-5">
-                CONTACT US
+                Contact Us
             </h1>
             <div class="video-container">
                 <video class="video" autoplay muted preload="auto" loop>

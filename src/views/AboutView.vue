@@ -5,7 +5,7 @@
       
       <div class="container justify-content-center about pt-5">
         <h1 class="heading pt-5">
-          ABOUT THE VIA VENETO ROYALE
+          About the Via Veneto Royale
         </h1>
         <br>
         <p>
