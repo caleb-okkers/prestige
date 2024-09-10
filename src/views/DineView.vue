@@ -97,7 +97,8 @@ export default {
 .content {
   /* background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-vanmalidate-784633.jpg?raw=true) no-repeat center center fixed; */
   /* background: #f1f0ee no-repeat center center fixed; */
-  background: #dfdacf no-repeat center center fixed;
+  background: #e2cc9e no-repeat center center fixed;
+  /* background: #dfdacf no-repeat center center fixed; */
   background-size: cover;
   width: 100% !important;
   max-width: 100% !important;
