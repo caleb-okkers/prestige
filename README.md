@@ -1,4 +1,4 @@
-# prestige-frontend
+# vv-royale
 
 ## Project setup
 ```
