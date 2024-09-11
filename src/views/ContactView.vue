@@ -205,9 +205,11 @@ border-radius: 0 !important;
   border: 2px var(--primary-dark) !important;
   color: #fff !important;
   border-radius: 0!important;
-  width: 100%;
 }
 
+button {
+  padding: 0.5rem 1rem;
+}
 
 button:hover, select:hover {
   color: var(--primary-dark);
