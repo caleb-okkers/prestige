@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="overlay">
-      <div class="container about pt-5">
+      <div class="container dine pt-5">
         <h1 class="heading pt-5">Casa Tua</h1>
 
         <section class="content-section">
@@ -95,8 +95,8 @@ export default {
 
 <style scoped>
 .content {
-  /* background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-vanmalidate-784633.jpg?raw=true) no-repeat center center fixed; */
-  background: #f1f0ee no-repeat center center fixed;
+  background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-dawid-kochman.png?raw=true) no-repeat center center fixed;
+  /* background: #f1f0ee no-repeat center center fixed; */
   /* background: #e2cc9e no-repeat center center fixed; */
   /* background: #dfdacf no-repeat center center fixed; */
   background-size: cover;
@@ -107,7 +107,7 @@ export default {
   padding-bottom: 2rem;
 }
 .overlay {
-  /* background: rgba(0, 0, 0, 0.7); */
+  background: rgba(0, 0, 0, 0.7);
   width: 100% !important;
   max-width: 100% !important;
   min-height: 100vh;
@@ -115,7 +115,7 @@ export default {
   margin: 0 0 !important;
 }
 
-.about {
+.dine {
   width: 100% !important;
   max-width: 100% !important;
   padding: 0;
@@ -126,8 +126,9 @@ export default {
 
 .heading {
   text-align: center;
-  color: var(--primary-dark);
+  color: var(--primary-light);
   padding-bottom: 2rem;
+  margin-top: 1.5rem;
 }
 
 .content-section {

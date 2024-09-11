@@ -12,7 +12,7 @@
             </div>
 
             <div class="form-div pb-5 justify-content-center align-items-center">
-          <form @submit.prevent="submitForm" class="mt-5">
+          <form @submit.prevent="submitForm" class="mt-1">
             <div class="contact-label-div mb-3">
               <label for="name" class="form-label contact-label">Full Name</label>
               <input v-model="formData.name" type="text" class="form-control" id="name" placeholder="Enter your full name" name="name" required>
@@ -133,7 +133,7 @@ export default {
 }
   
 .heading {
-  margin-top: 1rem;
+  margin-top: 2rem;
   color: var(--primary-light);
  }
 
@@ -168,29 +168,28 @@ export default {
 }
 
 .form-div {
-  width: 600px;
+  width: 500px;
   height: 450px;
   margin: 0 auto !important;
-  margin-top: -40px;
   
 }
 
 .form-control:hover {
 box-shadow: none !important;
 border: 2px solid var(--primary-dark) !important;
-border-radius: 5px 2px 5px 2px !important;
+border-radius: 0!important;
 }
 
 .form-control:focus {
 box-shadow: none !important;
 border: 2px solid var(--primary-dark) !important;
-border-radius: 5px 2px 5px 2px !important;
+border-radius: 0!important;
 }
 
 .form-control {
 box-shadow: none !important;
 border: 2px solid var(--secondary-dark) !important;
-border-radius: 5px 2px 5px 2px !important;
+border-radius: 0 !important;
 }
 
 .custom-submit-button {
@@ -198,10 +197,6 @@ border-radius: 5px 2px 5px 2px !important;
 }
 
 .contact-label {
-  font-family: "Bona Nova SC", serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 1.2rem;
   color: var(--primary-light);
 }
 
@@ -209,7 +204,7 @@ border-radius: 5px 2px 5px 2px !important;
   background: var(--primary-dark) !important;
   border: 2px var(--primary-dark) !important;
   color: #fff !important;
-  border-radius: 5px 2px 5px 2px !important;
+  border-radius: 0!important;
   width: 100%;
 }
 

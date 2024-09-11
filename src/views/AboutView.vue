@@ -49,7 +49,7 @@ export default {
 
 }
 .overlay {
-  background: rgba(0, 0, 0, 0.7); /* 50% opacity black overlay */
+  background: rgba(0, 0, 0, 0.7); 
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
@@ -62,7 +62,7 @@ p {
 }
 
  .heading {
-  margin-top: 1rem;
+  margin-top: 2rem;
   color: #fff;
  }
 
