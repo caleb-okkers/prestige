@@ -25,9 +25,9 @@ const calculateTotalPrice = (check_in_date, check_out_date, price_per_night) => 
 // });
 
 // Fetch all reservations
-reservationRouter.get('/', async (req, res) => {
+reservationRouter.get('/', (req, res) => {
     try {
-        const allReservations = await reservations.fetchReservations();
+        const allReservations = reservations.fetchReservations(req, res);
         if (!Array.isArray(allReservations) || allReservations.length === 0) {
             return res.status(404).json({ error: "No reservations found" });
         }

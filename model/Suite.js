@@ -54,7 +54,7 @@ class Suites {
                 SELECT suite_id, suite_name, suite_number, suite_type, description, price_per_night, max_occupancy, availability_status, img_url 
                 FROM suites 
                 ORDER BY price_per_night DESC 
-                LIMIT 4
+                LIMIT 3
             `;
             db.query(strQry, (err, results) => {
                 if (err) throw new Error(err.message);
@@ -77,10 +77,10 @@ class Suites {
             const strQry = `INSERT INTO suites SET ?`;
             db.query(strQry, [data], (err) => {
                 if (err) throw new Error(err.message);
-                res.status(201).json({
+                res.json({
                     status: res.statusCode,
-                    msg: 'Suite has been added successfully.'
-                });
+                    msg: "Suite has been added successfully."
+                })
             });
         } catch (e) {
             res.status(500).json({
