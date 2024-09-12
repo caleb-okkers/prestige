@@ -149,13 +149,13 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Spinner from '@/components/Spinner.vue'
+// import Spinner from '@/components/Spinner.vue'
 
 export default {
 name: 'AdminTable',
-components: {
-  Spinner
-},
+// components: {
+//   Spinner
+// },
 
 data() {
 return {
@@ -258,7 +258,7 @@ this.fetchSuites();
 <style scoped>
 
 .content {
-  background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-julius-silver-240301-753639.jpg?raw=true)
+  background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-pixabay-210249.jpg?raw=true)
     no-repeat center center fixed;
   background-size: cover;
   background-position: top;
@@ -395,6 +395,7 @@ button {
   margin: 0.2rem auto !important;
 }
 
+
 @media (max-width: 1350px) {
 
 .table {
@@ -406,6 +407,7 @@ white-space: nowrap;
 display: block; 
 }
 }
+
 
 
 
