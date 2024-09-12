@@ -37,6 +37,13 @@ export default createStore({
     },
     setReservation(state, value) {
       state.reservation = value
+    },
+    setToken(state, token) {
+      state.token = token
+    },
+    clearAuth(state) {
+      state.token = null
+      state.user = null
     }
 
   },
@@ -341,7 +348,48 @@ export default createStore({
       position: 'bottom-center'
     })
   }
-}
+},
+
+    // Authentication
+    async login({ commit }, payload) {
+      try {
+        const { token, user, msg, err } = await (await axios.post(`${apiURL}auth/login`, payload)).data
+        if (token && user) {
+          localStorage.setItem('authToken', token) // Store token in local storage
+          commit('setToken', token)
+          commit('setUser', user)
+          toast.success('Login successful', {
+            autoClose: 2000,
+            position: 'bottom-center'
+          })
+          // Redirect based on user role
+          if (user.role === 'admin') {
+            window.location.href = '/admin-dashboard'
+          } else {
+            window.location.href = '/user-dashboard'
+          }
+        } else {
+          toast.error(`${err || msg}`, {
+            autoClose: 2000,
+            position: 'bottom-center'
+          })
+        }
+      } catch (e) {
+        toast.error(`${e.message}`, {
+          autoClose: 2000,
+          position: 'bottom-center'
+        })
+      }
+    },
+    logout({ commit }) {
+      localStorage.removeItem('authToken') // Remove token from local storage
+      commit('clearAuth')
+      toast.success('Logout successful', {
+        autoClose: 2000,
+        position: 'bottom-center'
+      })
+      window.location.href = '/' // Redirect to home page
+    }
 
   },
   modules: {
