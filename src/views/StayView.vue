@@ -4,36 +4,33 @@
       <div class="container justify-content-center stay pt-5">
         <h1 class="heading pt-5">Make a Reservation</h1>
 
-        <div class="row filter-div mx-auto d-flex justify-content-center pt-4 pb-4">
-        <form role="search" class="w-25 h-100 search-form">
-          <input
-          class="form-control search w-100 h-100"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-          v-model="searchQuery"
-          />
-        </form>
-        <button
-        class="btn sort"
-        type="button"
-        id="sort"
-        @click="toggleSort"
+        <div
+          class="row filter-div mx-auto d-flex justify-content-center pt-4 pb-4"
         >
-        Price per night: {{ sortAscending ? 'lowest' : 'highest' }}
-      </button>
-      
+          <form role="search" class="w-25 h-100 search-form">
+            <input
+              class="form-control search w-100 h-100"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              v-model="searchQuery"
+            />
+          </form>
+          <button class="btn sort" type="button" id="sort" @click="toggleSort">
+            Price per night: {{ sortAscending ? "lowest" : "highest" }}
+          </button>
 
-      <select
-            class="form-control w-50 ms-2"
-            v-model="selectedSuiteType"
-          >
+          <select class="form-control w-50 ms-2" v-model="selectedSuiteType">
             <option value="">All Suite Types</option>
-            <option v-for="suite_type in suiteTypes" :key="suite_type" :value="suite_type">
+            <option
+              v-for="suite_type in suiteTypes"
+              :key="suite_type"
+              :value="suite_type"
+            >
               {{ suite_type }}
             </option>
-      </select>
-    </div>
+          </select>
+        </div>
 
         <div
           class="row gap-2 justify-content-center suites-div"
@@ -52,12 +49,21 @@
               <h5 class="card-title">{{ suite.suite_name }}</h5>
             </template>
             <template #card-footer>
-              <div class="button-wrapper d-md-flex d-block justify-content-center">
+              <div
+                class="button-wrapper d-md-flex d-block justify-content-center"
+              >
                 <router-link
                   :to="{ name: 'suite', params: { id: suite.suite_id } }"
                 >
                   <button class="btn btn-success">Details</button>
                 </router-link>
+
+                <button
+                  class="btn btn-success ms-2"
+                  @click="openBookingModal(suite)"
+                >
+                  Book Now
+                </button>
               </div>
               <p class="lead pt-2">{{ suite.price_per_night }} EUR</p>
               <p class="suite-type">{{ suite.suite_type }}</p>
@@ -70,72 +76,191 @@
       </div>
     </div>
   </div>
+
+  <!-- Booking Modal -->
+  <div v-if="showBookingModal" class="modal-overlay">
+    <div class="modal">
+      <h2>Book {{ selectedSuite.suite_name }}</h2>
+      <label for="checkin">Check-in Date:</label>
+      <input type="date" v-model="check_in_date" id="checkin" />
+      
+      <label for="checkout">Check-out Date:</label>
+      <input type="date" v-model="check_out_date" id="checkout" />
+
+      <p>Total Price: {{ calculateTotalPrice }} EUR</p>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" @click="bookSuite">Confirm Booking</button>
+        <button class="btn btn-secondary" @click="closeBookingModal">Cancel</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import CardComp from '@/components/Card.vue'
-  import Spinner from '@/components/Spinner.vue'
+import CardComp from "@/components/Card.vue";
+import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "StayView",
   components: {
     CardComp,
-    Spinner
+    Spinner,
   },
   data() {
     return {
-      searchQuery: '',
+      searchQuery: "",
       sortAscending: true,
-      selectedSuiteType: '',
-      suiteTypes: [], 
+      selectedSuiteType: "",
+      suiteTypes: [],
+      showBookingModal: false,
+      selectedSuite: null,
+      check_in_date: '',
+      check_out_date: '',
     };
   },
 
   computed: {
-  suites() {
-    let filteredSuites = this.$store.state.suites || [];
+    suites() {
+      let filteredSuites = this.$store.state.suites || [];
 
-    if (!filteredSuites.length) {
-      return [];
-    }
+      if (!filteredSuites.length) {
+        return [];
+      }
 
-    if (this.searchQuery) {
-      filteredSuites = filteredSuites.filter(suite =>
-        suite.suite_name.toLowerCase().includes(this.searchQuery.toLowerCase()) || suite.suite_type.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    }
-
-    if (this.selectedSuiteType && this.selectedSuiteType !== '') {
-        filteredSuites = filteredSuites.filter(suite =>
-          suite.suite_type === this.selectedSuiteType
+      if (this.searchQuery) {
+        filteredSuites = filteredSuites.filter(
+          (suite) =>
+            suite.suite_name
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase()) ||
+            suite.suite_type
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase())
         );
-    }
+      }
 
-    if (this.sortAscending) {
-      filteredSuites.sort((a, b) => a.price_per_night - b.price_per_night);
-    } else {
-      filteredSuites.sort((a, b) => b.price_per_night - a.price_per_night);
-    }
+      if (this.selectedSuiteType && this.selectedSuiteType !== "") {
+        filteredSuites = filteredSuites.filter(
+          (suite) => suite.suite_type === this.selectedSuiteType
+        );
+      }
 
-    return filteredSuites;
+      if (this.sortAscending) {
+        filteredSuites.sort((a, b) => a.price_per_night - b.price_per_night);
+      } else {
+        filteredSuites.sort((a, b) => b.price_per_night - a.price_per_night);
+      }
+
+      return filteredSuites;
+    },
+    calculateTotalPrice() {
+      if (!this.selectedSuite || !this.check_in_date || !this.check_out_date) {
+        return 0;
+      }
+      const start = new Date(this.check_in_date);
+      const end = new Date(this.check_out_date);
+      const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+      return this.selectedSuite.price_per_night * nights;
+    },
   },
-},
   methods: {
     toggleSort() {
       this.sortAscending = !this.sortAscending;
+    },
+        openBookingModal(suite) {
+      this.selectedSuite = suite;
+      this.showBookingModal = true;
+    },
+
+    closeBookingModal() {
+      this.showBookingModal = false;
+      this.selectedSuite = null;
+      this.check_in_date = '';
+      this.check_out_date = '';
+    },
+
+    bookSuite() {
+      if (!this.check_in_date || !this.check_out_date) {
+        alert("Please select both check-in and check-out dates.");
+        return;
+      }
+
+      const reservation = {
+        suite_id: this.selectedSuite.suite_id,
+        check_in_date: this.check_in_date,
+        check_out_date: this.check_out_date,
+        total_price: this.calculateTotalPrice,
+      };
+
+      this.$store.dispatch('addReservation', reservation)
+        .then(() => {
+          this.closeBookingModal();
+        });
     },
   },
   mounted() {
     this.$store.dispatch("fetchSuites").then(() => {
       // Extract unique suite types from suites
       const suites = this.$store.state.suites || [];
-      this.suiteTypes = [...new Set(suites.map(suite => suite.suite_type))];
+      this.suiteTypes = [...new Set(suites.map((suite) => suite.suite_type))];
     });
   },
 };
 </script>
 
 <style scoped>
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  z-index: 9999 !important;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .content {
   background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-julius-silver-240301-753639.jpg?raw=true)
     no-repeat center center fixed;
@@ -157,7 +282,6 @@ export default {
   color: var(--primary-light);
 }
 
-
 /* .filter-div {
   width: 100%;
 }
@@ -173,12 +297,14 @@ export default {
   object-position: center;
 } */
 
-button:hover, .sort:hover, select.form-control:hover {
-background: #000;
+button:hover,
+.sort:hover,
+select.form-control:hover {
+  background: #000;
 }
 
 button:focus {
-background: #000 !important;
+  background: #000 !important;
 }
 
 button {
@@ -196,21 +322,21 @@ button {
 }
 
 .form-control:hover {
-box-shadow: none !important;
-border: 2px solid var(--primary-dark) !important;
-border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 2px solid var(--primary-dark) !important;
+  border-radius: 0 !important;
 }
 
 .form-control:focus {
-box-shadow: none !important;
-border: 2px solid var(--primary-dark) !important;
-border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 2px solid var(--primary-dark) !important;
+  border-radius: 0 !important;
 }
 
 .form-control {
-box-shadow: none !important;
-border: 2px solid var(--primary-dark) !important;
-border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 2px solid var(--primary-dark) !important;
+  border-radius: 0 !important;
 }
 
 .suite-type {
@@ -218,14 +344,13 @@ border-radius: 0 !important;
   background: var(--primary-dark);
 }
 
-
 .suite-type {
   font-size: 0.9rem;
   /* color: #777; */
 }
 
 select.form-control {
-  max-width: 150px; 
+  max-width: 150px;
   background: var(--primary-dark);
   color: var(--primary-light);
 }
@@ -240,196 +365,175 @@ select.form-control {
 }
 
 @media (max-width: 1350px) {
-
   select.form-control {
-  width: 8rem !important; 
-  height: 2.6rem !important;
-  font-size: 1rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-  margin-top: 0.5rem;
-}
+    width: 8rem !important;
+    height: 2.6rem !important;
+    font-size: 1rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+    margin-top: 0.5rem;
+  }
 
-.search-form {
-  width: 95% !important;
-  height: 2.6rem !important;
-  font-size: 1rem !important;
-  
-}
+  .search-form {
+    width: 95% !important;
+    height: 2.6rem !important;
+    font-size: 1rem !important;
+  }
 
-.search {
-  width: 100% !important;
-  height: 100% !important;
-  font-size: 1rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
+  .search {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 1rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 
-.sort {
-  margin-top: 0.5rem;
-  width: 8rem !important;
-  height: 2.6rem !important;
-  font-size: 1rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
-
+  .sort {
+    margin-top: 0.5rem;
+    width: 8rem !important;
+    height: 2.6rem !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 }
 
 @media (max-width: 992px) {
-
   select.form-control {
-  width: 6.5rem !important; 
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-  margin-top: 0.5rem;
+    width: 6.5rem !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+    margin-top: 0.5rem;
+  }
+
+  .search-form {
+    width: 100% !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .search {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
+
+  .btn {
+    margin-top: 0.5rem;
+    width: 6.5rem !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 }
-
-.search-form {
-  width: 100% !important;
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  
-}
-
-.search {
-  width: 100% !important;
-  height: 100% !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
-.btn {
-  margin-top: 0.5rem;
-  width: 6.5rem !important;
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
-
-}
-
 
 @media (max-width: 768px) {
-
   select.form-control {
-  width: 6.5rem !important; 
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-  margin-top: 0.5rem;
-}
+    width: 6.5rem !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+    margin-top: 0.5rem;
+  }
 
-.search-form {
-  width: 100% !important;
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  
-}
+  .search-form {
+    width: 100% !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+  }
 
-.search {
-  width: 100% !important;
-  height: 100% !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
+  .search {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 
-.btn {
-  margin-top: 0.5rem;
-  width: 6.5rem !important;
-  height: 2.6rem !important;
-  font-size: 0.8rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
+  .btn {
+    margin-top: 0.5rem;
+    width: 6.5rem !important;
+    height: 2.6rem !important;
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 }
-
-}
-
 
 @media (max-width: 575px) {
-
   .card-title {
     font-size: 1rem;
   }
 
   select.form-control {
-  width: 7rem !important; 
-  height: 2.3rem !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-  margin-top: 0.5rem;
-}
+    width: 7rem !important;
+    height: 2.3rem !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+    margin-top: 0.5rem;
+  }
 
-.search-form {
-  width: 23rem !important;
-  height: 2.3rem !important;
-  font-size: 0.8rem !important;
-  
-}
+  .search-form {
+    width: 23rem !important;
+    height: 2.3rem !important;
+    font-size: 0.8rem !important;
+  }
 
-.search {
-  width: 100% !important;
-  height: 100% !important;
-  font-size: 0.8rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
+  .search {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 0.8rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 
-.sort {
-  margin-top: 0.5rem;
-  width: 7rem !important;
-  height: 2.3rem !important;
-  font-size: 0.8rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
+  .sort {
+    margin-top: 0.5rem;
+    width: 7rem !important;
+    height: 2.3rem !important;
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 
-.btn-success {
-  margin-top: 0.5rem;
-  width: 100% !important;
-  height: 2.3rem !important;
-  font-size: 0.8rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
+  .btn-success {
+    margin-top: 0.5rem;
+    width: 100% !important;
+    height: 2.3rem !important;
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 }
 
 @media (max-width: 330px) {
-
   select.form-control {
-  width: 5.5rem !important; 
-  height: 1.8rem !important;
-  font-size: 0.6rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-  margin-top: 0.5rem;
+    width: 5.5rem !important;
+    height: 1.8rem !important;
+    font-size: 0.6rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+    margin-top: 0.5rem;
+  }
+
+  .search-form {
+    width: 13rem !important;
+    height: 1.8rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  .search {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 0.65rem !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
+
+  .btn {
+    margin-top: 0.5rem;
+    width: 5.5rem !important;
+    height: 1.8rem !important;
+    font-size: 0.65rem !important;
+    text-align: center !important;
+    border: 0.2px solid var(--primary-dark) !important;
+  }
 }
-
-.search-form {
-  width: 13rem !important;
-  height: 1.8rem !important;
-  font-size: 0.8rem !important;
-  
-}
-
-.search {
-  width: 100% !important;
-  height: 100% !important;
-  font-size: 0.65rem !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
-.btn {
-  margin-top: 0.5rem;
-  width: 5.5rem !important;
-  height: 1.8rem !important;
-  font-size: 0.65rem !important;
-  text-align: center !important;
-  border: 0.2px solid var(--primary-dark) !important;
-}
-
-
-}
-
 </style>
