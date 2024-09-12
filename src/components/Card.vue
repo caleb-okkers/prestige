@@ -24,6 +24,8 @@ export default {
 
 .card {
   width: 25rem;
+  height: auto;
+  padding: 0;
 }
 
 .card {
@@ -35,6 +37,7 @@ export default {
   overflow: hidden;
   scale: 1;
   animation: easeIn 1s ease-out forwards;
+  background: var(--primary-dark);
 }
 
 .card:hover {
@@ -47,7 +50,8 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 0px !important;
-  background: #fff;
+  background: var(--primary-light);
+  margin-top: 1rem;
 }
 
 img {
@@ -57,10 +61,14 @@ img {
 }
 
 .card-header, .card-footer {
-  background: #fff;
+  background: var(--primary-dark);
+  color: var(--primary-light);
+  padding: 16px;
 }
 .card-body {
   padding: 16px;
+  background: var(--primary-dark);
+  color: var(--primary-light);
 }
 
 .card-title {
@@ -70,6 +78,10 @@ img {
 
 .card-footer {
   border: none;
+}
+
+.card-header {
+  border-color: var(--primary-dark);
 }
 
 

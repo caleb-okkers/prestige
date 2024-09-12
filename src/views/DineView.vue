@@ -138,7 +138,7 @@ export default {
   gap: 2rem;
   margin: 0 4rem;
   margin-bottom: 2rem;
-  background: var(--primary-light);
+  background: var(--primary-dark);
 }
 
 .content-section:last-of-type {
@@ -147,7 +147,7 @@ export default {
 
 .content-div {
   padding: 2rem;
-  background: var(--primary-light);
+  background: var(--primary-dark);
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -161,6 +161,7 @@ export default {
 .text-content {
   flex: 1;
   padding: 1rem;
+  color: var(--primary-light);
 }
 
 .text-content p {
