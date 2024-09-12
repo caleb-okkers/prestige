@@ -28,6 +28,7 @@
   </div>
 </div>
 
+
 <table class="table">
   <thead>
     <tr>
@@ -81,13 +82,13 @@
 <div v-if="showAddsuiteForm" class="modal-overlay">
 <div class="modal-content">
   <h3>Add New Suite</h3>
-  <input v-model="newsuite.img_url" type="text" placeholder="Suite URL">
-  <input v-model="newsuite.suite_name" type="text" placeholder="Suite Name">
-  <input v-model="newsuite.suite_number" type="text" placeholder="Suite Number">
-  <input v-model="newsuite.suite_type" type="text" placeholder="Suite Type">
-  <input v-model="newsuite.max_occupancy" type="text" placeholder="Max occupancy">
-  <input v-model="newsuite.description" type="text" placeholder="Description">
-  <input v-model="newsuite.price_per_night" type="text" placeholder="Price per Night">
+  <input v-model="newSuite.img_url" type="text" placeholder="Suite URL">
+  <input v-model="newSuite.suite_name" type="text" placeholder="Suite Name">
+  <input v-model="newSuite.suite_number" type="text" placeholder="Suite Number">
+  <input v-model="newSuite.suite_type" type="text" placeholder="Suite Type">
+  <input v-model="newSuite.max_occupancy" type="text" placeholder="Max occupancy">
+  <input v-model="newSuite.description" type="text" placeholder="Description">
+  <input v-model="newSuite.price_per_night" type="text" placeholder="Price per Night">
   <button class="btn mt-1 mb-1" @click="addsuite">Submit</button>
   <button class="btn mt-1 mb-1" @click="showAddsuiteForm = false">Cancel</button>
 </div>
@@ -118,26 +119,26 @@
     <td>{{ suite.description}}</td>
     <td>{{ suite.price_per_night }} EUR</td>
     <td>
-      <button class="btn mt-1 mb-1" @click="openUpdatesuiteModal(suite)">Update</button>
-      <button class="btn mt-1 mb-1" @click="deletesuite(suite.suite_id)">Delete</button>
+      <button class="btn mt-1 mb-1" @click="openUpdateSuiteModal(suite)">Update</button>
+      <button class="btn mt-1 mb-1" @click="deleteSuite(suite.suite_id)">Delete</button>
     </td>
   </tr>
 </tbody>
 </table>
 
 <!-- Update suite Modal -->
-<div v-if="showUpdatesuiteModal" class="modal-overlay">
+<div v-if="showUpdateSuiteModal" class="modal-overlay">
 <div class="modal-content">
   <h3>Update suite</h3>
-  <input v-model="currentsuite.img_url" type="text" placeholder="suite URL">
-  <input v-model="currentsuite.suite_name" type="text" placeholder="suite Name">
-  <input v-model="currentsuite.suite_number" type="text" placeholder="suite Number">
-  <input v-model="currentsuite.max_occupancy" type="text" placeholder="Max Occupancy">
-  <input v-model="currentsuite.description" type="text" placeholder="Description">
-  <input v-model="currentsuite.suite_type" type="text" placeholder="Suite Type">
-  <input v-model="currentsuite.price_per_night" type="text" placeholder="Price per Night">
-  <button class="btn mt-1 mb-1" @click="updatesuite(currentsuite)">Save changes</button>
-  <button class="btn mt-1 mb-1" @click="closeUpdatesuiteModal">Cancel</button>
+  <input v-model="currentSuite.img_url" type="text" placeholder="suite URL">
+  <input v-model="currentSuite.suite_name" type="text" placeholder="suite Name">
+  <input v-model="currentSuite.suite_number" type="text" placeholder="suite Number">
+  <input v-model="currentSuite.max_occupancy" type="text" placeholder="Max Occupancy">
+  <input v-model="currentSuite.description" type="text" placeholder="Description">
+  <input v-model="currentSuite.suite_type" type="text" placeholder="Suite Type">
+  <input v-model="currentSuite.price_per_night" type="text" placeholder="Price per Night">
+  <button class="btn mt-1 mb-1" @click="updateSuite(currentSuite)">Save changes</button>
+  <button class="btn mt-1 mb-1" @click="closeUpdateSuiteModal">Cancel</button>
 </div>
 </div>
 </section>
@@ -148,15 +149,20 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Spinner from '@/components/Spinner.vue'
 
 export default {
 name: 'AdminTable',
+components: {
+  Spinner
+},
+
 data() {
 return {
 showAddUserForm: false,
 showAddsuiteForm: false,
 showUpdateUserModal: false,
-showUpdatesuiteModal: false,
+showUpdateSuiteModal: false,
 newUser: {
 first_name: '',
 last_name: '',
@@ -164,7 +170,7 @@ email: '',
 password: '',
 phone_number: ''
 },
-newsuite: {
+newSuite: {
 img_url: '',
 suite_name: '',
 suite_number: '',
@@ -174,7 +180,7 @@ description: '',
 price_per_night: ''
 },
 currentUser: {},
-currentsuite: {}
+currentSuite: {}
 };
 },
 computed: {
@@ -203,7 +209,7 @@ if (confirm('Are you sure you want to delete this user?')) {
 },
 openUpdateSuiteModal(suite) {
 this.currentSuite = { ...suite };
-this.showUpdatesuiteModal = true;
+this.showUpdateSuiteModal = true;
 },
 closeUpdateSuiteModal() {
 this.showUpdateSuiteModal = false;
@@ -232,9 +238,9 @@ if (this.newUser.first_name && this.newUser.last_name && this.newUser.email && t
 },
 addsuite() {
 if (this.newSuite.img_url && this.newSuite.suite_name && this.newSuite.suite_number && this.newSuite.suite_type && this.newSuite.max_occupancy && this.newSuite.description&& this.newSuite.price_per_night ) {
-  this.$store.dispatch('addsuite', this.newsuite).then(() => {
+  this.$store.dispatch('addsuite', this.newSuite).then(() => {
     this.showAddsuiteForm = false;
-    this.newsuite = { img_url: '', suite_name: '', suite_number: '', suite_type: '', max_occupancy: '', description: '', price_per_night: ''};
+    this.newSuite = { img_url: '', suite_name: '', suite_number: '', suite_type: '', max_occupancy: '', description: '', price_per_night: ''};
   });
 } else {
   alert('Please fill in all fields.');
