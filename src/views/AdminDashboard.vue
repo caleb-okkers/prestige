@@ -4,11 +4,13 @@
 
       
       <div class="container justify-content-center admin pt-5">
+        <h1 class="heading pt-5">Admin Dashboard</h1>
+
   <section class="admin-section">
 
       
 <div class="row  pt-4">
-  <h2 class="headings ">Users</h2>
+  <h2 class="sub-heading">Users</h2>
 </div>
 <button @click="showAddUserForm = true" class="add-user-button btn mt-3 mb-3">Add User</button>
 
@@ -70,7 +72,7 @@
 
 
 <div class="row pt-4">
-<h2 class="headings ">Suites</h2>
+<h2 class="sub-heading">Suites</h2>
 </div>
 
 <button @click="showAddsuiteForm = true" class="add-suite-button btn mt-3 mb-3">Add suite</button>
@@ -249,6 +251,35 @@ this.fetchSuites();
 
 <style scoped>
 
+.content {
+  background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-julius-silver-240301-753639.jpg?raw=true)
+    no-repeat center center fixed;
+  background-size: cover;
+  background-position: top;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.heading {
+  margin-top: 2rem;
+  color: var(--primary-light);
+}
+
+.sub-heading {
+  color: var(--primary-light);
+}
+
+.content {
+  color: #000;
+}
+
 table img {
 aspect-ratio: 1;
 object-fit: contain;
@@ -279,7 +310,9 @@ vertical-align: middle;
 }
 
 .table th {
-background-color: #f2f2f2;
+background-color: var(--primary-dark);
+color: var(--primary-light);
+border: 1px solid #000;
 }
 
 .table tr:hover {
@@ -335,37 +368,25 @@ border-radius: 4px 4px 4px 4px;
 border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.heading {
-padding-bottom: 20px;
-position: fixed;
-top: 6rem;
-
-z-index: 1; 
-overflow: hidden;
+button:hover,
+.sort:hover,
+select.form-control:hover {
+  background: #000;
 }
 
-.banner-row {
-position: fixed;
-top: 150px; 
-
-z-index: -1; 
-overflow: hidden;
-
+button:focus {
+  background: #000 !important;
 }
 
-.banner {
-width: 100%;
-height: 100%;
-object-fit: cover; 
+button {
+  color: var(--primary-light);
+  background: #000;
+  border-radius: 0 !important;
+  border: 0.2px solid var(--primary-dark) !important;
 }
 
-.admin-section {
-position: relative;
-z-index: 2; 
-margin-top: 25rem; 
-padding: 20px;
-background-color: #fff;
-width: 100vw;
+.suites-table button {
+  margin: 0.2rem auto !important;
 }
 
 @media (max-width: 1350px) {
