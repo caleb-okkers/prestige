@@ -8,7 +8,7 @@ suiteRouter.use(bodyParser.json())
 suiteRouter.get('/', (req, res) => {
     suites.fetchSuites(req, res)
 })
-
+                                                                         
 suiteRouter.get('/:id', (req, res) => {
     suites.fetchSuite(req, res)
 })

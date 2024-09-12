@@ -45,41 +45,91 @@ class Users {
           }
     }
     
-    async registerUser(req, res) {
-        try {
-            let data = req.body
-              data.password = await hash(data.password, 12)
+    // async registerUser(req, res) {
+    //     try {
+    //         let data = req.body
+    //           data.password = await hash(data.password, 12)
 
-            let user = {
-            email: data.email,
-            password: data.password
-            } 
+    //         let user = {
+    //         email: data.email,
+    //         password: data.password
+    //         } 
             
-            let strQry = `
-            insert into  users
-            set ?;
-            `
-            db.query(strQry, [data], (err) => {
-            if(err) {
-                res.json({
-                status: res.statusCode,
-                msg: 'This email has already been taken'
-            })
-          } else {
-            const token = createToken(user)
-            res.json({
-              token,
-              msg: 'User registered successfully.'
-            })
-          }
-         })   
-          } catch (e) {
-            res.json({
-              status: 404,
-              msg: e.message
-            })
-          }
-    }
+    //         let strQry = `
+    //         insert into  users
+    //         set ?;
+    //         `
+    //         db.query(strQry, [data], (err) => {
+    //         if(err) {
+    //             res.json({
+    //             status: res.statusCode,
+    //             msg: 'This email has already been taken'
+    //         })
+    //       } else {
+    //         const token = createToken(user)
+    //         res.json({
+    //           token,
+    //           msg: 'User registered successfully.'
+    //         })
+    //       }
+    //      })   
+    //       } catch (e) {
+    //         res.json({
+    //           status: 404,
+    //           msg: e.message
+    //         })
+    //       }
+    // }
+
+    async registerUser(req, res) {
+      try {
+          let data = req.body;
+          data.password = await hash(data.password, 12);
+  
+          // Check if the email already exists
+          const checkEmailQuery = `SELECT * FROM users WHERE email = ?`;
+          db.query(checkEmailQuery, [data.email], (err, results) => {
+              if (err) {
+                  return res.status(500).json({
+                      status: 500,
+                      msg: 'Database query error: ' + err.message
+                  });
+              }
+  
+              if (results.length > 0) {
+                  // Email already exists
+                  return res.status(400).json({
+                      status: 400,
+                      msg: 'This email has already been taken'
+                  });
+              }
+  
+              // Proceed to insert the new user
+              const insertQuery = `INSERT INTO users SET ?`;
+              db.query(insertQuery, [data], (err) => {
+                  if (err) {
+                      return res.status(500).json({
+                          status: 500,
+                          msg: 'Database insert error: ' + err.message
+                      });
+                  }
+  
+                  const token = createToken({ email: data.email, password: data.password });
+                  res.status(201).json({
+                      token,
+                      msg: 'User registered successfully.'
+                  });
+              });
+          });
+  
+      } catch (e) {
+          res.status(500).json({
+              status: 500,
+              msg: 'Server error: ' + e.message
+          });
+      }
+  }
+  
 
    async updateUser(req, res) {
         try {
