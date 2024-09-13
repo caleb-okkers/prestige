@@ -2,19 +2,20 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
-const apiURL = 'http://localhost:4000/'
+const apiURL = 'https://vv-royale.onrender.com/'
 
 export default createStore({
   state: {
     users: null,
     user: null,
     suites: null,
-    premiumSuites: null,
     suite: null,
     reservations: null,
-    reservation: null
+    reservation: null,
+    token: null, // Ensure token state is initialized
   },
   getters: {
+    isAuthenticated: state => !!state.token,
   },
   mutations: {
     setUsers(state, value) {
@@ -25,9 +26,6 @@ export default createStore({
     },
     setSuites(state, value) {
       state.suites = value
-    },
-    setPremiumSuites(state, value) {
-      state.premiumSuites = value
     },
     setSuite(state, value) {
       state.suite = value
@@ -172,24 +170,7 @@ export default createStore({
       }
 
     },
-    async premiumSuites(context) {
-      try {
-        const { results, msg } = await (await axios.get(`${apiURL}suites/premium-suites`)).data
-        if (results) {
-          context.commit('setPremiumSuites', results)
-        } else {
-          toast.error(`${msg}`, {
-            autoClose: 2000,
-            position: 'bottom-center'
-          })
-        }
-      } catch (e) {
-        toast.error(`${e.message}`, {
-          autoClose: 2000,
-          position: 'bottom-center'
-        })
-      }
-    },
+
     async fetchSuite(context, suite_id) {
       try {
         const { result, msg } = await (await axios.get(`${apiURL}suites/${suite_id}`)).data
@@ -350,45 +331,50 @@ export default createStore({
   }
 },
 
-    // Authentication
-    async login({ commit }, payload) {
-      try {
-        const { token, user, msg, err } = await (await axios.post(`${apiURL}auth/login`, payload)).data
-        if (token && user) {
-          localStorage.setItem('authToken', token) // Store token in local storage
-          commit('setToken', token)
-          commit('setUser', user)
-          toast.success('Login successful', {
-            autoClose: 2000,
-            position: 'bottom-center'
-          })
-          // Redirect based on user role
-          if (user.role === 'admin') {
-            window.location.href = '/admin-dashboard'
-          } else {
-            window.location.href = '/user-dashboard'
-          }
-        } else {
-          toast.error(`${err || msg}`, {
-            autoClose: 2000,
-            position: 'bottom-center'
-          })
-        }
-      } catch (e) {
-        toast.error(`${e.message}`, {
-          autoClose: 2000,
-          position: 'bottom-center'
-        })
-      }
-    },
+// Login
+async login({ commit }, payload) {
+  try {
+    const { token, user, msg, err } = (await axios.post(`${apiURL}users/login`, payload)).data;
+
+    if (token && user) {
+      localStorage.setItem('authToken', token);
+      commit('setToken', token);
+      commit('setUser', user);
+
+      toast.success('Login successful', {
+        autoClose: 2000,
+        position: 'bottom-center'
+      });
+
+      return { success: true, user };
+    } else {
+      toast.error(`${err || msg}`, {
+        autoClose: 2000,
+        position: 'bottom-center'
+      });
+
+      return { success: false };
+    }
+  } catch (e) {
+    toast.error(`${e.message}`, {
+      autoClose: 2000,
+      position: 'bottom-center'
+    });
+
+    return { success: false };
+  }
+},
+
+
+    // Logout
     logout({ commit }) {
-      localStorage.removeItem('authToken') // Remove token from local storage
+      localStorage.removeItem('authToken') 
       commit('clearAuth')
       toast.success('Logout successful', {
         autoClose: 2000,
         position: 'bottom-center'
       })
-      window.location.href = '/' // Redirect to home page
+      window.location.href = '/'
     }
 
   },

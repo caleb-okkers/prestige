@@ -1,70 +1,52 @@
 <template>
   <div class="home">
-    <div class="welcome-container d-flex justify-content-center align-items-center">
-      <h1 class="welcome pb-5">
-        Benvenuti A Roma
-      </h1>
-    </div>
     <div class="video-container">
       <video class="video" autoplay muted preload="auto" loop>
-        <source src="https://github.com/caleb-okkers/vv-royale-assets/raw/main/rome---final-2024.mp4" type="video/mp4">
+        <source
+          src="https://github.com/caleb-okkers/vv-royale-assets/raw/main/rome---final-2024.mp4"
+          type="video/mp4"
+        />
       </video>
     </div>
 
-     <section class="premium-suites-section">
-
+    <section class="intro-section">
       <div class="row">
-        <h5 class="heading">Premium Suites</h5>
-      </div>
-      <div
-          class="row gap-2 justify-content-center suites-div"
-          v-if="premiumSuites"
+        <div
+          class="welcome-container justify-content-center align-items-center"
         >
-          <CardComp v-for="suite in premiumSuites" :key="suite.suite_id">
-            <template #card-header>
-              <img
-                :src="suite.img_url"
-                loading="lazy"
-                class="img-fluid"
-                :alt="suite.suite_name"
-              />
-            </template>
-            <template #card-body>
-              <h5 class="card-title">{{ suite.suite_name }}</h5>
-            </template>
-            <template #card-footer>
-              <div class="button-wrapper d-md-flex d-block justify-content-center">
-                <router-link
-                  :to="{ name: 'suite', params: { id: suite.suite_id } }"
-                >
-                  <button class="btn btn-success">Details</button>
-                </router-link>
-              </div>
-              <p class="lead pt-2">{{ suite.price_per_night }} EUR</p>
-              <p class="suite-type">{{ suite.suite_type }}</p>
-            </template>
-          </CardComp>
+          <h1 class="welcome pb-4">Benvenuti A Roma</h1>
+
+          <p>
+            Step into the heart of Rome's most iconic street and experience
+            unparalleled luxury at Via Veneto Royale. Nestled on the historic
+            Via Veneto, our hotel redefines sophistication and elegance, echoing
+            the glamour of the 1960s immortalized by Federico Fellini. Here,
+            opulence meets tradition, offering a gateway to Rome’s rich cultural
+            heritage.
+          </p>
+          <br>
+            <p>From our doorstep, marvel at the artistic splendor of the
+            Piazza Barberini and the hauntingly beautiful Capuchin Crypt. Enjoy
+            the serenity of Villa Borghese, a lush oasis that blends art,
+            history, and nature. At Via Veneto Royale, every moment is a
+            celebration of luxury, where refined comfort and style are
+            paramount. 
+          </p>
+          <br>
+            <p>Welcome to a world where history, culture, and elegance
+            converge—welcome to Via Veneto Royale.
+          </p>
         </div>
-  <div v-else>
-    <Spinner/> 
-  </div>
-</section>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   components: {},
-  computed: {
-    premiumSuites() {
-      return this.$store.state.premiumSuites
-    }
-  },
-  mounted() {
-    this.$store.dispatch('premiumSuites')
-  }
-}
+};
 </script>
 
 <style scoped>
@@ -72,20 +54,20 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 100vh; 
+  min-height: 100vh;
 }
 
-.welcome-container {
+/* .welcome-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-}
+} */
 
 .welcome {
   color: #fff;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 5rem;
   font-family: "Instrument Serif", serif;
   font-weight: 400;
@@ -107,7 +89,7 @@ export default {
   left: 50%;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   transform: translate(-50%, -50%);
 }
 
@@ -121,14 +103,45 @@ export default {
   z-index: 1;
 }
 
-.premium-suites-section {
+.intro-section {
   position: relative;
-  z-index: 2; 
-  margin-top: 40rem; 
+  z-index: 2;
+  margin-top: 35rem;
   padding: 20px;
-  background-color: var(--primary-dark); 
+  background-color: var(--primary-dark);
   color: var(--primary-light);
   width: 100vw;
+  
 }
 
+.welcome-container p {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.welcome-container {
+  padding-bottom: 3rem;
+}
+
+  @media (max-width: 992px) {
+  
+  }
+  
+  
+  @media (max-width: 768px) {
+  
+  }
+  
+  
+  @media (max-width: 575px) {
+  
+  }
+  
+  @media (max-width: 330px) {
+
+  .welcome {
+  font-size: 2rem !important;
+}
+  
+  }
 </style>

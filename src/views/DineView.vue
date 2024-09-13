@@ -85,7 +85,6 @@
   </div>
 </template>
 
-  
 <script>
 export default {
   name: "DineView",
@@ -96,32 +95,22 @@ export default {
 <style scoped>
 .content {
   background: url(https://github.com/caleb-okkers/vv-royale-assets/blob/main/pexels-dawid-kochman.png?raw=true) no-repeat center center fixed;
-  /* background: #f1f0ee no-repeat center center fixed; */
-  /* background: #e2cc9e no-repeat center center fixed; */
-  /* background: #dfdacf no-repeat center center fixed; */
   background-size: cover;
   width: 100% !important;
-  max-width: 100% !important;
   min-height: 100vh;
-  margin: 0 0 !important;
   padding-bottom: 2rem;
 }
+
 .overlay {
   background: rgba(0, 0, 0, 0.7);
   width: 100% !important;
-  max-width: 100% !important;
   min-height: 100vh;
-  padding: 0;
-  margin: 0 0 !important;
 }
 
 .dine {
   width: 100% !important;
-  max-width: 100% !important;
   padding: 0;
   padding-top: 5.5rem !important;
-  margin: 0 0 !important;
-
 }
 
 .heading {
@@ -136,9 +125,10 @@ export default {
   align-items: center;
   margin-bottom: 3rem;
   gap: 2rem;
-  margin: 0 4rem;
+  margin: 0 0;
   margin-bottom: 2rem;
   background: var(--primary-dark);
+  flex-wrap: wrap;
 }
 
 .content-section:last-of-type {
@@ -151,21 +141,26 @@ export default {
   display: flex;
   align-items: center;
   gap: 2rem;
+  flex-wrap: wrap;
   margin: 0 auto;
 }
 
+
+
 .image-content {
   flex: 1;
+  width: 100%;
 }
 
 .text-content {
   flex: 1;
   padding: 1rem;
   color: var(--primary-light);
+  width: 100%; 
 }
 
 .text-content p {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -194,10 +189,20 @@ export default {
 @media (max-width: 768px) {
   .content-section {
     flex-direction: column;
+    padding: 1rem;
+
   }
 
-  .content-section .text-content {
-    order: 1;
+  .content-div {
+    flex-direction: column;
+  }
+
+  .image-content, .text-content {
+    width: 100%;
+  }
+
+  .text-content p {
+    width: 100%;
   }
 }
 </style>

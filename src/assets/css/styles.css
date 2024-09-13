@@ -137,3 +137,18 @@ body {
     font-weight: 400;
     font-style: normal;
   }
+
+  /* Media Queries */
+
+  @media (max-width: 330px) {
+
+  body {
+    font-size: 0.65rem !important;
+  }
+
+  .heading {
+    font-size: 2rem;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+}

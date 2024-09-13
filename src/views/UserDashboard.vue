@@ -8,13 +8,14 @@
             <div class="row pt-4">
               <h2 class="sub-heading">Your Information</h2>
             </div>
-  
+            <button @click="showUpdateUserModal = true" class="btn mt-3 mb-3">Update Information</button>
+            <button @click="confirmDeleteAccount" class="btn mt-3 mb-3 delete-account">Delete Account</button>
+            <button @click="handleLogout" class="btn mt-3 mb-3">Logout</button>
+            
             <div class="user-info" v-if="user">
               <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
               <p><strong>Email:</strong> {{ user.email }}</p>
               <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
-              <button @click="showUpdateUserModal = true" class="btn mt-3 mb-3">Update Information</button>
-              <button @click="confirmDeleteAccount" class="btn mt-3 mb-3 delete-account">Delete Account</button>
             </div>
   
             <!-- Update User Modal -->
@@ -69,6 +70,7 @@
   
   <script>
   import { mapState, mapActions } from 'vuex'
+  import { toast } from "vue3-toastify";
   
   export default {
     name: 'UserDashboard',
@@ -86,7 +88,7 @@
       }
     },
     methods: {
-      ...mapActions(['fetchUser', 'fetchReservations', 'updateUser', 'deleteUser', 'cancelReservation']),
+      ...mapActions(['fetchUser', 'fetchReservations', 'updateUser', 'deleteUser', 'cancelReservation', 'logout']),
       formatDate(dateString) {
         return new Date(dateString).toLocaleDateString()
       },
@@ -115,15 +117,32 @@
             this.fetchReservations();
           });
         }
+      },
+      created() {
+        // Fetch user data and reservations when the component is created
+        if (this.user && this.user.user_id) {
+          this.fetchUser(this.user.user_id);
+        }
+        this.fetchReservations();
+      },
+
+      async handleLogout() {
+      try {
+        await this.logout(); // Call the logout action
+        toast.success('Logout successful', {
+          autoClose: 2000,
+          position: 'bottom-center'
+        });
+        // The redirect is handled by the `logout` action in the store
+      } catch (error) {
+        toast.error('An error occurred during logout', {
+          autoClose: 2000,
+          position: 'bottom-center'
+        });
       }
-    },
-    created() {
-      // Fetch user data and reservations when the component is created
-      if (this.user && this.user.user_id) {
-        this.fetchUser(this.user.user_id);
-      }
-      this.fetchReservations();
     }
+    },
+
   }
   </script>
   
@@ -181,22 +200,23 @@
   .btn {
     margin-right: 10px;
     color: var(--primary-light);
-    background: #000;
+    background: var(--primary-dark);
     border: 0.2px solid var(--primary-dark) !important;
+    border-radius: 0 !important;
   }
   
   .btn:hover {
-    background: #333;
+    background: #000;
   }
   
   .delete-account {
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background-color: #a70112;
+    border-color: #a70112;
   }
   
   .delete-account:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
+    background-color:#a30101;
+    border-color:#a30101;
   }
   
   .modal-overlay {

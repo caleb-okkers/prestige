@@ -114,10 +114,14 @@
     border: none !important;
     outline: none !important;
   }
+
+  .navbar-toggler-icon {
+    color: var(--primary-light) !important;
+  }
   
   .navbar-toggler:focus {
     box-shadow: none !important;
-    background: #fff !important;
+    background: #000 !important;
   }
   
   nav a.router-link-active {

@@ -95,7 +95,7 @@
   
   }
   
-  @media (max-width: 330px) {
+  @media (max-width: 300px) {
   
   } */
   

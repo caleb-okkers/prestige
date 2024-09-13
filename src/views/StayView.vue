@@ -535,5 +535,9 @@ select.form-control {
     text-align: center !important;
     border: 0.2px solid var(--primary-dark) !important;
   }
+
+  .sort {
+    width: 8.5rem !important;
+  }
 }
 </style>

@@ -108,7 +108,7 @@ export default {
   name: "LoginView",
   data() {
     return {
-      hasAccount: true, // Toggle between Login and Register
+      hasAccount: true,
       loginEmail: "",
       loginPassword: "",
       registerFirstName: "",
@@ -127,24 +127,27 @@ export default {
     },
 
     async handleLogin() {
+      this.errorMessage = "";
       try {
-        const response = await this.login({
+        const result = await this.login({
           email: this.loginEmail,
           password: this.loginPassword,
         });
-
-        if (response) {
-          if (this.$store.getters.currentUser.role === "Admin") {
-            this.$router.push("/admin-dashboard");
+        
+        if (result && result.role) {
+          // Login successful
+          if (result.role === 'Admin') {
+            this.$router.push('/admin-dashboard');
           } else {
-            this.$router.push("/user-dashboard");
+            this.$router.push('/user-dashboard');
           }
         } else {
-          alert("Login failed!");
+          // Login failed
+          this.errorMessage = "Invalid credentials. Please try again.";
         }
       } catch (error) {
         console.error("Login error:", error);
-        alert("An error occurred during login.");
+        this.errorMessage = "An error occurred. Please try again later.";
       }
     },
 
@@ -163,25 +166,34 @@ export default {
           password: this.registerPassword,
         });
 
-        if (response) {
-          // Clear the form fields
-          this.registerFirstName = "";
-          this.registerLastName = "";
-          this.registerPhoneNumber = "";
-          this.registerEmail = "";
-          this.registerPassword = "";
-          this.confirmPassword = "";
-
-          // Toggle to the login form
+        if (response && response.success) {
+          // Registration successful
+          this.clearRegistrationForm();
           this.toggleForm();
+          alert("Registration successful! Please log in.");
+        } else {
+          // Registration failed
+          alert("Registration failed. Please try again.");
         }
       } catch (error) {
-        alert("An error occurred during registration.");
+        console.error("Registration error:", error);
+        alert("An error occurred during registration. Please try again.");
       }
+    },
+
+    clearRegistrationForm() {
+      this.registerFirstName = "";
+      this.registerLastName = "";
+      this.registerPhoneNumber = "";
+      this.registerEmail = "";
+      this.registerPassword = "";
+      this.confirmPassword = "";
     },
   },
 };
 </script>
+
+
 
 <style scoped>
 .content {
