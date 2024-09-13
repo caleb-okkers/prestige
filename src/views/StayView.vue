@@ -546,7 +546,7 @@ select.form-control {
   }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 375px) {
   select.form-control {
     width: 5.5rem !important;
     height: 1.8rem !important;

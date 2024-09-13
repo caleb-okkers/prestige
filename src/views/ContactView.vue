@@ -266,7 +266,7 @@ button:hover, select:hover {
   }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 375px) {
   .contact-section {
     margin-top: 6rem !important;
     flex-direction: column;

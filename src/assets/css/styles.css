@@ -140,7 +140,22 @@ body {
 
   /* Media Queries */
 
-  @media (max-width: 330px) {
+  @media (max-width: 475px) {
+
+    body {
+      font-size: 0.75rem !important;
+    }
+  
+    .heading {
+      font-size: 2.3rem;
+      padding-top: 3rem !important;
+      margin-top: 0 !important;
+    }
+  }
+
+
+
+  @media (max-width: 375px) {
 
   body {
     font-size: 0.65rem !important;

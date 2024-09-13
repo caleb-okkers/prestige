@@ -137,7 +137,7 @@ export default {
   
   }
   
-  @media (max-width: 330px) {
+  @media (max-width: 375px) {
 
   .welcome {
   font-size: 2rem !important;

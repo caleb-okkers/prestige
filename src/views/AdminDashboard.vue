@@ -483,7 +483,7 @@ font-size: 0.9rem;
 .admin-section {
 margin: 0 !important;
 padding: 0 !important;
-margin-top: 12rem !important;
+margin-top: 5rem !important;
 width: 100vw !important;
 }
 
@@ -501,7 +501,49 @@ font-size: 0.7rem;
 }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 475px) {
+
+  .table {
+display: block;
+}
+
+table img {
+aspect-ratio: 1;
+object-fit: contain;
+object-position: center;
+width: 2rem;
+}
+
+table button {
+width: 3.5rem;
+font-size: 0.7rem;
+}
+
+.admin-section {
+margin: 0 !important;
+padding: 0 !important;
+margin-top: 0rem !important;
+width: 100vw !important;
+}
+
+.heading {
+  margin-top: 2rem !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.admin {
+padding: 0;
+}
+
+.user-heading-row {
+  padding-top: 0;
+}
+}
+
+@media (max-width: 375px) {
 .table {
 display: block;
 }
