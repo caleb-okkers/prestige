@@ -13,10 +13,6 @@ suiteRouter.get('/:id', (req, res) => {
     suites.fetchSuite(req, res)
 })
 
-suiteRouter.get('/premium-suites', (req , res) => {
-    suites.premiumSuites(req, res)
-})
-
 suiteRouter.post('/add', (req, res) => {
     suites.addSuite(req, res)
 })

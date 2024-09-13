@@ -196,8 +196,7 @@ class Users {
                   }
                 )
               } else {
-                const isValidPassword = await compare 
-                (password, result[0].password)
+                const isValidPassword = await compare(password, result[0].password)
                 if (isValidPassword) {
                   const token = createToken({
                     email, password
