@@ -9,7 +9,7 @@
   <section class="admin-section">
 
       
-<div class="row  pt-4">
+<div class="row user-heading-row pt-4">
   <h2 class="sub-heading">Users</h2>
 </div>
 <button @click="showAddUserForm = true" class="add-user-button btn mt-3 mb-3">Add User</button>
@@ -457,7 +457,18 @@ font-size: 1rem;
 }
 
 .admin-section {
+margin: 0 !important;
+padding: 0 !important;
 margin-top: 15rem !important;
+width: 100vw !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.admin {
+padding: 0;
 }
 
 }
@@ -470,7 +481,18 @@ font-size: 0.9rem;
 }
 
 .admin-section {
+margin: 0 !important;
+padding: 0 !important;
 margin-top: 12rem !important;
+width: 100vw !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.admin {
+padding: 0;
 }
 
 table button {
@@ -497,7 +519,26 @@ font-size: 0.7rem;
 }
 
 .admin-section {
-margin-top: 9rem !important;
+margin: 0 !important;
+padding: 0 !important;
+margin-top: 0rem !important;
+width: 100vw !important;
+}
+
+.heading {
+  margin-top: 1.5rem !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.admin {
+padding: 0;
+}
+
+.user-heading-row {
+  padding-top: 0;
 }
 }
 

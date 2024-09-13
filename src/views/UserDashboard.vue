@@ -128,7 +128,7 @@
 
       async handleLogout() {
       try {
-        await this.logout(); // Call the logout action
+        await this.logout(); 
         toast.success('Logout successful', {
           autoClose: 2000,
           position: 'bottom-center'
@@ -168,14 +168,16 @@
   }
   
   .user-info {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--primary-dark);
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 20px;
+    color: var(--primary-light);
   }
   
   .user-info p {
     margin-bottom: 10px;
+    color: var(--primary-light);
   }
   
   .table {
@@ -189,12 +191,13 @@
   .table td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center;
   }
   
   .table th {
     background-color: var(--primary-dark);
     color: var(--primary-light);
+    border: 1px solid #000;
   }
   
   .btn {
@@ -249,8 +252,32 @@
     border-radius: 4px;
   }
   
-  @media (max-width: 768px) {
-    .modal-content {
+
+  @media (max-width: 992px) {
+
+.table {
+overflow-x: auto;
+white-space: nowrap; 
+}
+
+table button {
+width: 4.5rem;
+font-size: 1rem;
+}
+}
+
+@media (max-width: 928px) {
+
+.table {
+display: block; 
+overflow-x: auto; 
+white-space: nowrap; 
+}
+}
+
+@media (max-width: 768px) {
+
+  .modal-content {
       width: 90%;
     }
   
@@ -262,5 +289,111 @@
       font-size: 0.8rem;
       padding: 0.2rem 0.5rem;
     }
-  }
+
+.table {
+display: block; 
+overflow-x: auto; 
+white-space: nowrap; 
+}
+
+.table img {
+width: 2rem; 
+}
+
+.table th,
+.table td {
+padding: 4px; 
+font-size: 1rem; 
+}
+
+table button {
+width: 4.5rem;
+font-size: 1rem;
+}
+
+.user-section {
+margin: 0 !important;
+padding: 0 !important;
+margin-top: 15rem !important;
+width: 100vw !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.user {
+padding: 0;
+}
+
+}
+
+
+@media (max-width: 575px) {
+.table th,
+.table td {
+font-size: 0.9rem; 
+}
+
+.user-section {
+margin: 0 !important;
+padding: 0 !important;
+margin-top: 12rem !important;
+width: 100vw !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.user {
+padding: 0;
+}
+
+table button {
+width: 3.5rem;
+font-size: 0.7rem;
+}
+}
+
+  @media (max-width: 330px) {
+.table {
+display: block;
+}
+
+table img {
+aspect-ratio: 1;
+object-fit: contain;
+object-position: center;
+width: 2rem;
+}
+
+table button {
+width: 3.5rem;
+font-size: 0.7rem;
+}
+
+.user-section {
+margin: 0 !important;
+padding: 0 !important;
+margin-top: 0rem !important;
+width: 100vw !important;
+}
+
+.heading {
+  margin-top: 1.5rem !important;
+}
+
+.overlay {
+  padding: 0 !important;
+}
+
+.user {
+padding: 0;
+}
+
+.user-heading-row {
+  padding-top: 0;
+}
+}
   </style>

@@ -82,15 +82,16 @@
     <div class="modal">
       <h2>Book {{ selectedSuite.suite_name }}</h2>
       <label for="checkin">Check-in Date:</label>
-      <input type="date" v-model="check_in_date" id="checkin" />
+      <input type="date" v-model="check_in_date" id="checkin" :min="today" @change="validateDates" />
       
       <label for="checkout">Check-out Date:</label>
-      <input type="date" v-model="check_out_date" id="checkout" />
+      <input type="date" v-model="check_out_date" id="checkout" :min="minCheckoutDate" @change="validateDates" />
 
-      <p>Total Price: {{ calculateTotalPrice }} EUR</p>
+      <p v-if="isValidDateRange">Total Price: {{ calculateTotalPrice }} EUR</p>
+      <p v-else class="error-message">Please select a valid date range</p>
 
       <div class="modal-actions">
-        <button class="btn btn-primary" @click="bookSuite">Confirm Booking</button>
+        <button class="btn btn-primary" @click="bookSuite" :disabled="!isValidDateRange">Confirm Booking</button>
         <button class="btn btn-secondary" @click="closeBookingModal">Cancel</button>
       </div>
     </div>
@@ -117,6 +118,7 @@ export default {
       selectedSuite: null,
       check_in_date: '',
       check_out_date: '',
+      isValidDateRange: false,
     };
   },
 
@@ -154,8 +156,21 @@ export default {
 
       return filteredSuites;
     },
+    today() {
+      return new Date().toISOString().split('T')[0];
+    },
+
+    minCheckoutDate() {
+      if (this.check_in_date) {
+        const nextDay = new Date(this.check_in_date);
+        nextDay.setDate(nextDay.getDate() + 1);
+        return nextDay.toISOString().split('T')[0];
+      }
+      return this.today;
+    },
+
     calculateTotalPrice() {
-      if (!this.selectedSuite || !this.check_in_date || !this.check_out_date) {
+      if (!this.selectedSuite || !this.check_in_date || !this.check_out_date || !this.isValidDateRange) {
         return 0;
       }
       const start = new Date(this.check_in_date);
@@ -168,9 +183,12 @@ export default {
     toggleSort() {
       this.sortAscending = !this.sortAscending;
     },
-        openBookingModal(suite) {
+    openBookingModal(suite) {
       this.selectedSuite = suite;
       this.showBookingModal = true;
+      this.check_in_date = this.today;
+      this.check_out_date = this.minCheckoutDate;
+      this.validateDates();
     },
 
     closeBookingModal() {
@@ -178,11 +196,22 @@ export default {
       this.selectedSuite = null;
       this.check_in_date = '';
       this.check_out_date = '';
+      this.isValidDateRange = false;
+    },
+
+    validateDates() {
+      if (this.check_in_date && this.check_out_date) {
+        const start = new Date(this.check_in_date);
+        const end = new Date(this.check_out_date);
+        this.isValidDateRange = start < end;
+      } else {
+        this.isValidDateRange = false;
+      }
     },
 
     bookSuite() {
-      if (!this.check_in_date || !this.check_out_date) {
-        alert("Please select both check-in and check-out dates.");
+      if (!this.isValidDateRange) {
+        alert("Please select a valid date range.");
         return;
       }
 
@@ -195,9 +224,15 @@ export default {
 
       this.$store.dispatch('addReservation', reservation)
         .then(() => {
+          alert("Booking confirmed successfully!");
           this.closeBookingModal();
+        })
+        .catch((error) => {
+          alert("An error occurred while booking. Please try again.");
+          console.error("Booking error:", error);
         });
     },
+  
   },
   mounted() {
     this.$store.dispatch("fetchSuites").then(() => {
@@ -210,6 +245,12 @@ export default {
 </script>
 
 <style scoped>
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
 
 .modal-overlay {
   position: fixed;
